@@ -1,0 +1,11 @@
+filters:
+- pandoc-crossref
+metadata:
+  eqnPrefix: 式
+  figPrefix: 図
+  figureTitle: 図
+  listingTitle: コード
+  lstPrefix: コード
+  tableTitle: 表
+  tblPrefix: 表
+template: easy_template.html

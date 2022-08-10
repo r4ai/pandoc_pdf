@@ -1,0 +1,4 @@
+docker:
+    use_docker: true
+    docker_image: 'r4ai/pandoc'
+default_profile: 'latex'
