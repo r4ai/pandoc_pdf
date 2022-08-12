@@ -1,0 +1,14 @@
+name: pandoc-build
+on:
+    push:
+        branches:
+            - main
+            - dev/github-action
+jobs:
+    deploy:
+        name: pandoc
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v3
+            - run: python3 ./pandoc_pdf/main.py README.md -p html5 -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y)"
