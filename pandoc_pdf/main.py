@@ -1,6 +1,5 @@
 from copy import deepcopy
 from pprint import pprint
-from tkinter import MULTIPLE
 import click
 import yaml
 import subprocess as sp
