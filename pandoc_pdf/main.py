@@ -1,5 +1,6 @@
 from copy import deepcopy
 from pprint import pprint
+from tkinter import MULTIPLE
 import click
 import yaml
 import subprocess as sp
@@ -30,6 +31,11 @@ CACHE_DIR = Path(__file__).parent / 'cache'
     multiple=True
 )
 @click.option(
+    '-M', '--metadata',
+    type=str,
+    multiple=True
+)
+@click.option(
     '-p', '--preset',
     type=click.Choice(['html5', 'latex']),
     default='latex'
@@ -43,14 +49,16 @@ CACHE_DIR = Path(__file__).parent / 'cache'
     'input_file',
     type=click.Path(exists=True, path_type=Path),
 )
-def pandoc_pdf(input_file: Path, debug: bool, docker, volume, variable, preset, output):
+def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable, preset, output):
     """Command to generate pdf easily in pandoc."""
 
     # * ---初期設定
     output_file = deepcopy(output)
     variables = deepcopy(variable)
+    metadatas = deepcopy(metadata)
     del output
     del variable
+    del metadata
     if str(output_file) == 'NULL':
         output_file = Path(f"{input_file.stem}.pdf")
     init_config()
@@ -103,7 +111,9 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, variable, preset, 
     args_pandoc = ['pandoc', str(input_file), '-t', preset, '-o',
                    str(output_file), '-d', str(defaults_file)]
     for variable in variables:
-        args_pandoc.extend(['--variable', variable])
+        args_pandoc.extend(['-V', variable])
+    for metadata in metadatas:
+        args_pandoc.extend(['-M', metadata])
     args = ' '.join(args_docker) + f" \"{' '.join(args_pandoc)}\""
 
     # * ---コマンドの実行

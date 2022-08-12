@@ -1,9 +1,3 @@
----
-title: README
-author: rai
-date: \today
----
-
 # pandoc_pdf
 Command to generate pdf easily with pandoc.  
 If you already have docker installed, you don't even need to build an environment with pandoc. By default, the r4ai/pandoc image is used. This can be changed from `.config/pandoc_pdf/setting.yml`.
@@ -42,7 +36,7 @@ For now, you need to clone this repository and then build with `poetry build`, a
 
 ## Usage
 ```txt
-Usage: main.py [OPTIONS] INPUT_FILE
+Usage: pandoc_pdf [OPTIONS] INPUT_FILE
 
   Command to generate pdf easily in pandoc.
 
@@ -51,6 +45,7 @@ Options:
   -D, --docker TEXT
   -v, --volume TEXT
   -V, --variable TEXT
+  -M, --metadata TEXT
   -p, --preset [html5|latex]
   -o, --output PATH
   --help                      Show this message and exit.
