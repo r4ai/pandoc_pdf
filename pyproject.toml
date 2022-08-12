@@ -18,4 +18,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-pandoc_pdf = 'pandoc_easy_cli.main:pandoc_pdf'
+pandoc_pdf = 'pandoc_pdf.main:pandoc_pdf'
