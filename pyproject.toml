@@ -1,8 +1,13 @@
 [tool.poetry]
 name = "pandoc_pdf"
-version = "0.1.0"
+version = "0.1.1"
 description = "Command to generate pdf easily with pandoc."
+license = "MIT"
 authors = ["rai"]
+packages = [
+    { include = "pandoc_pdf", from = "src" },
+    { include = "utils", from = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
