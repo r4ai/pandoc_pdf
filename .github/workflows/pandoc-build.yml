@@ -22,5 +22,10 @@ jobs:
         uses: abatilo/actions-poetry@v2.1.3
         with:
           poetry-version: ${{ matrix.poetry-version }}
-      - name: View poetry --help
-        run: poetry --help
+      - name: build pandoc_pdf
+        run: |
+          poetry build
+          pip install dist/pandoc_pdf*.whl
+      - name: generate README.pdf
+        run: |
+          pandoc_pdf README.md -p html5 -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y)"
