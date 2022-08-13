@@ -1,0 +1,39 @@
+name: pandoc-build
+on:
+  push:
+    branches:
+      - main
+      - dev/github-action
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        poetry-version: ["1.1.13"]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.1.3
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: build pandoc_pdf
+        run: |
+          poetry build
+          pip install dist/pandoc_pdf*.whl
+      - name: generate README.pdf
+        run: |
+          pandoc_pdf README.md -p html5 -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_html5.pdf"
+          pandoc_pdf README.md -p latex -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_latex.pdf"
+      - name: commit generated pdf
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Automatic PDF generation by github-action"
+          git push
