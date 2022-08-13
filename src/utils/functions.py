@@ -111,7 +111,7 @@ def generate_command(input_file, output_file, setting_obj, opt_preset, opt_docke
 def generate_command_docker(setting_obj):
     setting_obj['docker'].setdefault('volumes', [])
     setting_obj['docker'].setdefault('other_option', "")
-    args_docker = ['docker', 'run', '--rm', '-it', '--volume',
+    args_docker = ['docker', 'run', '--rm', '--volume',
                    f'{CACHE_DIR}:/cache', '--entrypoint', '/bin/bash']
     if setting_obj['docker']['use_docker'] == True:
         for volume_i in setting_obj['docker']['volumes']:
