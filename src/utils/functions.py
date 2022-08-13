@@ -3,31 +3,30 @@ import yaml
 from pathlib import Path
 import shutil
 
-
+#! エラー defaults.ymlの内容がコピーされてない
 def init_config() -> None:
-    if not CACHE_DIR.exists():
-        CACHE_DIR.mkdir()
-    if not CONFIG_DIR.exists():
-        CONFIG_DIR.mkdir()
+    for dir_i in [CACHE_DIR, CONFIG_DIR]:
+        if not dir_i.exists():
+            dir_i.mkdir()
     for file_name in ['setting.yml', 'defaults.yml']:
-        file_path = (CONFIG_DIR / file_name)
-        if not file_path.exists():
-            file_path.touch()
+        config_file_path = (CONFIG_DIR / file_name)
+        if not config_file_path.exists():
+            config_file_path.touch()
             with open(Path(__file__).parent / 'default_config' / file_name) as f:
                 content_raw = f.read()
                 content_obj = yaml.safe_load(content_raw)
-            file_path.write_text(content_raw)
+            config_file_path.write_text(content_raw)
             del content_raw
             # * ---.tex
             if file_name == 'defaults.yml':
                 for tex_file_name in content_obj['latex']['include-in-header']:
-                    tex_file_path = CONFIG_DIR / \
+                    config_tex_file_path = CONFIG_DIR / \
                         ''.join(tex_file_name.split('/')[-1:])
-                    if not tex_file_path.exists():
-                        tex_file_path.touch()
-                        with open(Path(__file__).parent / 'default_config' / tex_file_path.name) as f:
+                    if not config_tex_file_path.exists():
+                        config_tex_file_path.touch()
+                        with open(Path(__file__).parent / 'default_config' / config_tex_file_path.name) as f:
                             content_raw = f.read()
-                        tex_file_path.write_text(content_raw)
+                        config_tex_file_path.write_text(content_raw)
                         del content_raw
     del file_name
 
