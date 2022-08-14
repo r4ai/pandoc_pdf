@@ -1,11 +1,11 @@
-name: pandoc-build
+name: ci
 on:
   push:
     branches:
       - main
       - dev/github-action
 jobs:
-  ci:
+  generate-readme-pdf:
     strategy:
       fail-fast: false
       matrix:
