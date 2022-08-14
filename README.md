@@ -1,4 +1,4 @@
-# pandoc_pdf
+# pandoc_pdf　[![ci](https://github.com/e9716/pandoc_pdf/actions/workflows/pandoc-build.yml/badge.svg?branch=main)](https://github.com/e9716/pandoc_pdf/actions/workflows/pandoc-build.yml)
 Command to generate pdf easily with pandoc.  
 If you already have docker installed, you don't even need to build an environment with pandoc. By default, the r4ai/pandoc image is used. This can be changed from `.config/pandoc_pdf/setting.yml`.
 
