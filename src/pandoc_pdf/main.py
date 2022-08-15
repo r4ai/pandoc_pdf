@@ -1,11 +1,18 @@
-from utils.functions import init_config, init_setting, generate_defaults_file_by_preset, generate_command_docker, generate_command_pandoc
-from utils.env import CACHE_DIR, CONFIG_DIR
+from asyncio import subprocess
+from pandoc_pdf_utils.functions import init_config, init_setting, init_cache, generate_command_docker, generate_command_pandoc
+from pandoc_pdf_utils.env import CACHE_DIR, CONFIG_DIR
 from pathlib import Path
-import subprocess as sp
+import subprocess
 import click
+import yaml
 from copy import deepcopy
 from pprint import pprint
 import sys
+
+
+init_config()
+with open(CONFIG_DIR / 'defaults.yml') as f:
+    presets = [key_i for key_i in yaml.safe_load(f)]
 
 
 @click.command()
@@ -34,7 +41,7 @@ import sys
 )
 @click.option(
     '-p', '--preset',
-    type=click.Choice(['html5', 'latex']),
+    type=click.Choice(presets),
     default="latex"
 )
 @click.option(
@@ -58,8 +65,7 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
     del metadata
     if str(output_file) == 'NULL':
         output_file = Path(f"{input_file.stem}.pdf")
-    init_config()
-    generate_defaults_file_by_preset()
+    init_cache()
     setting_obj = init_setting(docker, volumes)
     if setting_obj['docker']['use_docker'] == True:
         defaults_file = Path(f'/cache/defaults_{preset}.yml')
@@ -69,9 +75,10 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
     # * ---Execute command
     args_docker = generate_command_docker(setting_obj)
     args_pandoc = generate_command_pandoc(
-        setting_obj, defaults_file, input_file, output_file, preset, variables, metadatas)
+        setting_obj, defaults_file, input_file, output_file, preset, variables, metadatas
+    )
     args = ' '.join(args_docker) + f" \"{' '.join(args_pandoc)}\""
-    result = sp.run(args, shell=True)
+    result = subprocess.run(args, shell=True)
     result_status = 'Succeeded' if result.returncode == 0 else 'Failed'
     result_color = '' if result.returncode == 0 else 'red'
     click.secho(
@@ -80,7 +87,7 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
         bold=True
     )
 
-    #! ---DEBUG
+    # * ---DEBUG
     if debug:
         click.secho('\n---< DEBUG >---', fg='red')
         click.secho('Executed command:')
