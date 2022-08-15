@@ -34,7 +34,9 @@ $ ls
 - python3
 
 ## Installation
-For now, you need to clone this repository and then build with `poetry build`, and `pip install`.
+```bash
+pip install pandoc-pdf
+```
 
 ## Usage
 ```{.txt caption="help message"}

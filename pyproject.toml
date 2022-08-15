@@ -24,3 +24,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 pandoc_pdf = 'pandoc_pdf.main:pandoc_pdf'
+
+[tool.poetry-version-plugin]
+source = "git-tag"
