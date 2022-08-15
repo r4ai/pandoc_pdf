@@ -28,12 +28,12 @@ jobs:
           pip install dist/pandoc_pdf*.whl
       - name: generate README.pdf
         run: |
-          pandoc_pdf README.md -p html5 -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_html5.pdf"
-          pandoc_pdf README.md -p latex -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_latex.pdf"
-      - name: commit generated pdf
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Automatic PDF generation by github-action"
-          git push
+          pandoc_pdf tests/README.md -p html5 -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_html5.pdf"
+          pandoc_pdf tests/README.md -p latex -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_latex.pdf"
+      - name: Upload a generated pdf
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: README_pdf
+          path: |
+            README_html5.pdf
+            README_latex.pdf
