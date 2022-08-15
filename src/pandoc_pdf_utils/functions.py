@@ -1,25 +1,7 @@
-from .env import CONFIG_DIR, CACHE_DIR, DEFAULT_CONFIG_DIR
+from .env import CONFIG_DIR, DEFAULT_CONFIG_DIR, CACHE_DIR
 import yaml
 from pathlib import Path
 import shutil
-
-
-def _touch_files(key: str, obj: dict) -> None:
-    if key in obj:
-        values: dict[str] = []
-        for filepath_i in [value_i.split('/') for value_i in obj[key]]:
-            if filepath_i[0] == r'${.}':
-                values.append('/'.join(filepath_i[1:]))
-            else:
-                continue
-        for filepath_i in values:
-            filepath_i = CONFIG_DIR / filepath_i
-            if not filepath_i.exists():
-                filepath_i.touch()
-                with open(Path(__file__).parent / 'default_config' / filepath_i.name) as f:
-                    content_raw = f.read()
-                filepath_i.write_text(content_raw)
-            shutil.copy(CONFIG_DIR / filepath_i, CACHE_DIR / filepath_i)
 
 
 def init_config() -> None:
@@ -29,7 +11,6 @@ def init_config() -> None:
         shutil.copytree(DEFAULT_CONFIG_DIR, CONFIG_DIR, dirs_exist_ok=False)
 
 
-# TODO: CONFIG_DIRフォルダを、CONFIG_DIRに再帰コピーする。
 def init_cache() -> None:
     """Copy the CONFIG_DIR folder to CONFIG_DIR recursively. Generate the defaults_{preset}.yml separeted by preset.
     """

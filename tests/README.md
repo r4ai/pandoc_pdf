@@ -25,11 +25,13 @@ $ ls
 ## Requirements
 ### with docker
 - docker
+- python3
 
 ### without docker
 - [pandoc](https://github.com/jgm/pandoc)
 - [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref)
 - [pandoc-easy-templates](https://github.com/ryangrose/easy-pandoc-templates)
+- python3
 
 ## Installation
 For now, you need to clone this repository and then build with `poetry build`, and `pip install`.
