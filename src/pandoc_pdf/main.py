@@ -77,7 +77,7 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
     args_pandoc = generate_command_pandoc(
         setting_obj, defaults_file, input_file, output_file, preset, variables, metadatas
     )
-    if setting_obj['docker'] == True:
+    if setting_obj['docker']['use_docker'] == True:
         args = ' '.join(args_docker) + f" \"{' '.join(args_pandoc)}\""
     else:
         args = ' '.join(args_pandoc)
