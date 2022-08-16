@@ -4,6 +4,9 @@ on:
     types: [opened, reopened, synchronize]
     branches:
       - main
+  push:
+    branches:
+      - main
 permissions:
   contents: read
 jobs:
@@ -44,6 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           publish: false
+          commitish: main
 
       - name: Git tag
         run: |
