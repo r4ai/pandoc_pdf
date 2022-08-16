@@ -55,6 +55,17 @@ Options:
   --help                      Show this message and exit.
 ```
 
+The --preset option provides the preset to be used.  
+Also, the standard presets available are html5 and latex. Both presets are for Japanese, so if you want to use them in English, please edit them accordingly (you can change them from ~/.config/defaults.yml).
+```bash
+$ pandoc_pdf HOGE.md --preset html5
+>>> Loading page (1/2)
+>>> Printing pages (1/2)
+>>> Done
+>>> Succeeded to generate HOGE.pdf from HOGE.md by html5.
+```
+
+
 The "--debug" option shows the command that pandoc_pdf is actually executing.
 ```bash
 $ pandoc_pdf HOGE.md --preset latex --debug
