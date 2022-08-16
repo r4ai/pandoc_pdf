@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - release
-    paths:
-      - 'src/**'
   pull_request:
     types: [opened, reopened, synchronize]
     branches:
@@ -45,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           publish: false
-          commitish: main
+          commitish: release
 
       - name: build pandoc_pdf
         run: |
