@@ -7,7 +7,7 @@ packages = [
   {include = "pandoc_pdf", from = "src"},
   {include = "pandoc_pdf_utils", from = "src"},
 ]
-version = "0.0.0"
+version = "0.1.4"
 
 [tool.poetry.dependencies]
 PyYAML = "^6.0"
