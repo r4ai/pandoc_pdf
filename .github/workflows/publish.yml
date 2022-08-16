@@ -36,10 +36,6 @@ jobs:
         run: |
           poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
 
-      - name: build pandoc_pdf
-        run: |
-          poetry build
-
       - uses: release-drafter/release-drafter@v5
         id: generate-release-note
         env:
@@ -48,8 +44,14 @@ jobs:
           publish: false
           commitish: main
 
+      - name: build pandoc_pdf
+        run: |
+          pip install tomlkit
+          python3 .github/workflows/version.py pyproject.toml ${{ steps.generate-release-note.outputs.tag_name }}
+          poetry build
+
       - name: Create release
-        if: startsWith(steps.generate-release-note.outputs.tag_name, 'v')
+        if: github.event_name == 'push'
         id: publish-release-note
         uses: softprops/action-gh-release@v1
         with:
@@ -60,5 +62,15 @@ jobs:
             dist/pandoc_pdf*.whl
 
       - name: Publish distribution 📦 to PyPI
+        if: github.event_name == 'push'
         run: |
           poetry publish
+
+      - name: commit pyproject.toml version update
+        if: github.event_name == 'push'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add pyproject.toml
+          git commit -m 'version update'
+          git push
