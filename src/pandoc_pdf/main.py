@@ -1,5 +1,6 @@
 from asyncio import subprocess
-from pandoc_pdf_utils.functions import init_config, init_setting, init_cache, generate_command_docker, generate_command_pandoc
+from pandoc_pdf_utils.functions import init_config, init_setting, init_cache, generate_command_docker, \
+    generate_command_pandoc
 from pandoc_pdf_utils.env import CACHE_DIR, CONFIG_DIR
 from pathlib import Path
 import subprocess
@@ -8,7 +9,6 @@ import yaml
 from copy import deepcopy
 from pprint import pprint
 import sys
-
 
 init_config()
 with open(CONFIG_DIR / 'defaults.yml') as f:
@@ -67,7 +67,7 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
         output_file = Path(f"{input_file.stem}.pdf")
     init_cache()
     setting_obj = init_setting(docker, volumes)
-    if setting_obj['docker']['use_docker'] == True:
+    if setting_obj['docker']['use_docker']:
         defaults_file = Path(f'/cache/defaults_{preset}.yml')
     else:
         defaults_file = CACHE_DIR / f'defaults_{preset}.yml'

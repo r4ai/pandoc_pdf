@@ -4,6 +4,7 @@
 ### Project ###
 src/utils/cache
 README.pdf
+.idea
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

@@ -89,8 +89,8 @@ def generate_command_pandoc(setting_obj, defaults_file, input_file, output_file,
         input_file (Path): Path to the file to be converted to PDF, given as an argument to the pandoc_pdf command.
         output_file (Path): Path of the file to output to. Value of --output option.
         opt_preset (str): Preset name to be used. By default, html5 and latex are set.
-        opt_variables (str): Arguments for LaTeX files.
-        opt_metadatas (str): A set of keys and values to be registered as metadata.
+        opt_variables ([str]): Arguments for LaTeX files.
+        opt_metadatas ([str]): A set of keys and values to be registered as metadata.
 
     Returns:
         list[str]: pandoc command with arguments
