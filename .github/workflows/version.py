@@ -1,6 +1,5 @@
 import sys
 import tomlkit
-from pprint import pprint
 import re
 
 
