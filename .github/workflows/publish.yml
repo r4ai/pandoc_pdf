@@ -2,12 +2,13 @@ name: Publish Python 🐍 distributions 📦 to PyPI
 on:
   push:
     branches:
-      - main
+      - release
     paths:
       - 'src/**'
   pull_request:
     types: [opened, reopened, synchronize]
     branches:
+      - release
       - main
 permissions:
   contents: read
