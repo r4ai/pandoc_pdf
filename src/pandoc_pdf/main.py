@@ -8,7 +8,6 @@ import click
 import yaml
 from copy import deepcopy
 from pprint import pprint
-import sys
 
 init_config()
 with open(CONFIG_DIR / 'defaults.yml') as f:
@@ -54,7 +53,7 @@ with open(CONFIG_DIR / 'defaults.yml') as f:
     type=click.Path(exists=True, path_type=Path),
 )
 def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable, preset, output):
-    """Command to generate pdf easily in pandoc."""
+    """Command to generate pdf easily with pandoc."""
     output_file = deepcopy(output)
     volumes = deepcopy(volume)
     variables = deepcopy(variable)
@@ -90,7 +89,6 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
         bold=True
     )
 
-    # * ---DEBUG
     if debug:
         click.secho('\n---< DEBUG >---', fg='red')
         click.secho('Executed command:')
