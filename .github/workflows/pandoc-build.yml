@@ -1,14 +1,22 @@
 name: ci
 on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'pyproject.toml'
   push:
     branches:
       - main
-      - dev/github-action
-env:
-  LOCALSTACK_CACHE_PATH: localstack-image
-  LOCALSTACK_VERSION: latest
+    paths:
+    - 'src/**'
+    - 'tests/**'
+    - 'pyproject.toml'
+
 jobs:
   generate-readme-pdf:
+    if: github.event_name == 'push'
     strategy:
       fail-fast: false
       matrix:

@@ -1,6 +1,6 @@
 from asyncio import subprocess
-from pandoc_pdf_utils.functions import init_config, init_setting, init_cache, generate_command_docker, \
-    generate_command_pandoc
+from pandoc_pdf_utils.functions import \
+    init_config, init_setting, init_cache, generate_command_docker, generate_command_pandoc
 from pandoc_pdf_utils.env import CACHE_DIR, CONFIG_DIR
 from pathlib import Path
 import subprocess
@@ -92,7 +92,6 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
         click.secho('\n---< DEBUG >---', fg='red')
         click.secho('Executed command:')
         click.secho(f'  {result.args}', bold=True)
-        pprint(sys.path)
 
     if result.returncode == 0:
         return 0
