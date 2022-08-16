@@ -37,13 +37,8 @@ jobs:
         run: |
           poetry build
 
-      - name: Publish distribution 📦 to PyPI
-        if: startsWith(github.ref, 'refs/tags')
-        run: |
-          poetry publish
 
       - uses: release-drafter/release-drafter@v5
-        if: startsWith(github.ref, 'refs/tags/')
         id: generate-release-note
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,11 +46,15 @@ jobs:
           publish: false
 
       - name: Create release
+        id: publish-release-note
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           tag_name: ${{ steps.generate-release-note.outputs.tag_name }}
           body: ${{ steps.generate-release-note.outputs.body }}
           files: |
             dist/pandoc_pdf*.tar.gz
             dist/pandoc_pdf*.whl
+
+      - name: Publish distribution 📦 to PyPI
+        run: |
+          poetry publish
