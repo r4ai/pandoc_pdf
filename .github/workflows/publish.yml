@@ -2,11 +2,12 @@ name: Publish Python 🐍 distributions 📦 to PyPI
 on:
   push:
     branches:
-      - release
+      - main
+    paths:
+      - 'src/**'
   pull_request:
     types: [opened, reopened, synchronize]
     branches:
-      - release
       - main
 permissions:
   contents: read
@@ -43,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           publish: false
-          commitish: release
+          commitish: main
 
       - name: build pandoc_pdf
         run: |
