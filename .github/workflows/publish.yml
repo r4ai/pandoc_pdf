@@ -1,0 +1,64 @@
+name: Publish Python 🐍 distributions 📦 to PyPI
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  publish-and-create-releases:
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        poetry-version: ["1.2.0b3"]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v2.1.3
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: PyPI setting
+        run: |
+          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: build pandoc_pdf
+        run: |
+          poetry build
+
+
+      - uses: release-drafter/release-drafter@v5
+        id: generate-release-note
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          publish: false
+
+      - name: Git tag
+        run: |
+          git tag ${{ steps.generate-release-note.outputs.tag_name }}
+
+      - name: Create release
+        id: publish-release-note
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.generate-release-note.outputs.tag_name }}
+          body: ${{ steps.generate-release-note.outputs.body }}
+          files: |
+            dist/pandoc_pdf*.tar.gz
+            dist/pandoc_pdf*.whl
+
+      - name: Publish distribution 📦 to PyPI
+        run: |
+          poetry publish
