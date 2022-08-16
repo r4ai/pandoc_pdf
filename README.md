@@ -24,15 +24,19 @@ $ ls
 
 ## Requirements
 ### with docker
+- python3.10^
 - docker
 
 ### without docker
+- python3.10^
 - [pandoc](https://github.com/jgm/pandoc)
 - [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref)
 - [pandoc-easy-templates](https://github.com/ryangrose/easy-pandoc-templates)
 
 ## Installation
-For now, you need to clone this repository and then build with `poetry build`, and `pip install`.
+```bash
+pip install pandoc-pdf
+```
 
 ## Usage
 ```txt
@@ -50,7 +54,18 @@ Options:
   -o, --output PATH
   --help                      Show this message and exit.
 ```
-TODO  
+
+The "--debug" option shows the command that pandoc_pdf is actually executing.
+```bash
+$ pandoc_pdf HOGE.md --preset latex --debug
+>>> Succeeded to generate HOGE.pdf from HOGE.md by latex.
+>>>
+>>> ---< DEBUG >---
+>>> Executed command:
+>>>   docker run --rm --volume /home/rai/.pyenv/versions/3.10.5/lib/python3.10/site-packages/pandoc_pdf_utils/cache:/cache --entrypoint /bin/bash --volume $(pwd):/build  r4ai/pandoc -c "pandoc HOGE.md -t latex -o HOGE.pdf -d /cache/defaults_latex.yml"
+```
+
+TODO
 
 ## Config
 The config file is stored in `~/.config/pandoc_pdf/`. 
