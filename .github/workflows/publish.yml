@@ -48,11 +48,8 @@ jobs:
           publish: false
           commitish: main
 
-      - name: Git tag
-        run: |
-          git tag ${{ steps.generate-release-note.outputs.tag_name }}
-
       - name: Create release
+        if: startsWith(steps.generate-release-note.outputs.tag_name, 'v')
         id: publish-release-note
         uses: softprops/action-gh-release@v1
         with:
