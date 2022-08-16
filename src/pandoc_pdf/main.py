@@ -64,7 +64,7 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
     del variable
     del metadata
     if str(output_file) == 'NULL':
-        output_file = Path(f"{input_file.stem}.pdf")
+        output_file = Path(f"{input_file.parent / input_file.stem}.pdf")
     init_cache()
     setting_obj = init_setting(docker, volumes)
     if setting_obj['docker']['use_docker']:
