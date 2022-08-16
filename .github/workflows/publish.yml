@@ -45,6 +45,10 @@ jobs:
         with:
           publish: false
 
+      - name: Git tag
+        run: |
+          git tag ${{ steps.generate-release-note.outputs.tag_name }}
+
       - name: Create release
         id: publish-release-note
         uses: softprops/action-gh-release@v1
