@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
 ### Project ###
-src/utils/cache
+src/pandoc_pdf_utils/cache
 README.pdf
 .idea
 

@@ -77,7 +77,10 @@ def pandoc_pdf(input_file: Path, debug: bool, docker, volume, metadata, variable
     args_pandoc = generate_command_pandoc(
         setting_obj, defaults_file, input_file, output_file, preset, variables, metadatas
     )
-    args = ' '.join(args_docker) + f" \"{' '.join(args_pandoc)}\""
+    if setting_obj['docker'] == True:
+        args = ' '.join(args_docker) + f" \"{' '.join(args_pandoc)}\""
+    else:
+        args = ' '.join(args_pandoc)
     result = subprocess.run(args, shell=True)
     result_status = 'Succeeded' if result.returncode == 0 else 'Failed'
     result_color = '' if result.returncode == 0 else 'red'

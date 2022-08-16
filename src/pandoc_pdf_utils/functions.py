@@ -12,7 +12,7 @@ def init_config() -> None:
 
 
 def init_cache() -> None:
-    """Copy the CONFIG_DIR folder to CONFIG_DIR recursively. Generate the defaults_{preset}.yml separeted by preset.
+    """Copy the CONFIG_DIR folder to CACHE_DIR recursively. Generate the defaults_{preset}.yml separeted by preset.
     """
     if not CACHE_DIR.exists():
         CACHE_DIR.mkdir()
