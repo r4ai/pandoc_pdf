@@ -16,7 +16,7 @@ $ ls
 >>> input.md
 
 $ pandoc_pdf input.md
->>> Succeeded to generate README.pdf from README.md by latex.
+>>> Succeeded to generate input.pdf from input.md by latex.
 
 $ ls
 >>> input.md input.pdf
