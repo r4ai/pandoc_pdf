@@ -95,7 +95,7 @@ def generate_command_pandoc(setting_obj, defaults_file, input_file, output_file,
     Returns:
         list[str]: pandoc command with arguments
     """
-    args_pandoc = ['pandoc', str(input_file), '-t', opt_preset, '-o',
+    args_pandoc = ['pandoc', str(input_file), '-o',
                    str(output_file), '-d', str(defaults_file)]
     for variable in opt_variables:
         args_pandoc.extend(['-V', variable])
