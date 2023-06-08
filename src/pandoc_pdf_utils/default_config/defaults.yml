@@ -1,6 +1,6 @@
 latex:
-  pdf-engine: xelatex
   to: latex
+  pdf-engine: xelatex
   standalone: true
   listings: true
   variables:
@@ -13,6 +13,7 @@ latex:
     - ${.}/header.tex
     - ${.}/deeplists.tex
   metadata:
+    listings: true
     documentclass: bxjsreport
     geometry: a4paper
     figureTitle: "図"
