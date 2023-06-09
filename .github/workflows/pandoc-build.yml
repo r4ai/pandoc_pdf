@@ -45,8 +45,8 @@ jobs:
 
             - name: generate README.pdf
               run: |
-                  pandoc_pdf tests/README.md -p html5 -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_html5.pdf"
-                  pandoc_pdf tests/README.md -p latex -M title=README -M author=rai -M date="$(date +%B)\ $(date +%e),\ $(date +%Y) -o README_latex.pdf"
+                  pandoc_pdf README.md -p html5 -M 'title="README"' -M 'author=rai' -M 'date="$(date +%B)\\ $(date +%e),\\ $(date +%Y)"' -o README_html5.pdf || exit -1
+                  pandoc_pdf README.md -p latex -M 'title="README"' -M 'author=rai' -M 'date="$(date +%B)\\ $(date +%e),\\ $(date +%Y)"' -o README_latex.pdf || exit -1
 
             - name: Upload a generated pdf
               uses: actions/upload-artifact@v3.1.0
