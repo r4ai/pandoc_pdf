@@ -1,4 +1,3 @@
-from asyncio import subprocess
 from pandoc_pdf_utils.functions import (
     init_config,
     init_setting,
@@ -12,7 +11,6 @@ import subprocess
 import click
 import yaml
 from copy import deepcopy
-from pprint import pprint
 
 init_config()
 with open(CONFIG_DIR / "defaults.yml") as f:
@@ -49,10 +47,6 @@ def pandoc_pdf(
     volumes = deepcopy(volume)
     variables = deepcopy(variable)
     metadatas = deepcopy(metadata)
-    del output
-    del volume
-    del variable
-    del metadata
     if str(output_file) == "NULL":
         output_file = Path(f"{input_file.parent / input_file.stem}.pdf")
     init_cache()
@@ -73,11 +67,13 @@ def pandoc_pdf(
         variables,
         metadatas,
     )
-    if setting_obj["docker"]["use_docker"] == True:
+    if setting_obj["docker"]["use_docker"]:
         args = " ".join(args_docker) + f" \"{' '.join(args_pandoc)}\""
     else:
         args = " ".join(args_pandoc)
     result = subprocess.run(args, shell=True)
+
+    # * ---Print result
     result_status = "Succeeded" if result.returncode == 0 else "Failed"
     result_color = "" if result.returncode == 0 else "red"
     click.secho(
@@ -91,10 +87,7 @@ def pandoc_pdf(
         click.secho("Executed command:")
         click.secho(f"  {result.args}", bold=True)
 
-    if result.returncode == 0:
-        return 0
-    else:
-        return 1
+    return result.returncode
 
 
 if __name__ == "__main__":
